@@ -17,7 +17,7 @@ def read_and_clean_orders():
                                                       list(depot_names[config.col_name_1]))
     df.dropna(subset=[config.col_ord_lostijd], inplace=True)
 
-    df['LoadingTime'] = df[config.col_ord_lospartij]
+    df['LoadingTime'] = df[config.col_ord_lostijd]
     df['LoadingTime'] = df['LoadingTime'].apply(
         lambda x: dt.time(hour=int(x[0:2]), minute=int(x[3:5]), second=int(x[6:8])))
     df['LoadingTime'] = df['LoadingTime'].apply(
