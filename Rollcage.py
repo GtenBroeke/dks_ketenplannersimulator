@@ -2,14 +2,14 @@ import config
 
 
 class Rollcage:
-    def __init__(self, identifier=None, timer=None, origin=None, destination=None, n_parcels=None, fillgrade=None):
+    def __init__(self, identifier=None, timer=None, origin=None, destination=None, n_parcels=None, fillgrade=None, blue=None):
         self.identifier = identifier
         self.timer = timer
         self.origin = origin
         self.destination = destination
         self.n_parcels = n_parcels
         self.fillgrade = fillgrade
-
+        self.blue = blue
         self.sorting_timer = 0
 
     def add_to_sorter(self):

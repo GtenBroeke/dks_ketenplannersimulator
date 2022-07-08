@@ -45,6 +45,8 @@ class Depot(PostnlLocation):
         self.processed_parcels = 0         # Total number of sorted parcels
         self.processed_rc = 0
         self.total_rc_in = 0               # Total number of RC dropped at depot
+        self.failed_rc = []
+        self.rc_processed = []
 
     def __str__(self):
         """
@@ -89,6 +91,8 @@ class Depot(PostnlLocation):
         that the mean sorting time is 0.5)
         :return: No return
         """
+        if self.name in config.blue_dict.keys():
+            self.blue_reorder()
         while len(self.rc_at_opvoer) < self.state and len(self.unsorted_rc) > 0:
             rollcage = self.unsorted_rc[0]
             if rollcage.timer == 0:
@@ -96,6 +100,7 @@ class Depot(PostnlLocation):
                 self.processed_parcels += rollcage.n_parcels
                 self.processed_rc += 1
                 self.rc_on_sorter.append(rollcage)
+                self.rc_processed.append(rollcage)
             else:
                 self.rc_at_opvoer.append(rollcage)
             self.unsorted_rc.remove(rollcage)
@@ -127,6 +132,7 @@ class Depot(PostnlLocation):
                 self.processed_parcels += rollcage.n_parcels
                 self.processed_rc += 1
                 self.rc_on_sorter.append(rollcage)
+                self.rc_processed.append(rollcage)
         self.rc_at_opvoer = list(filter(lambda x: x.timer > 0, self.rc_at_opvoer))
         return
 
@@ -173,6 +179,15 @@ class Depot(PostnlLocation):
             ident = uuid4()
             self.afvoer_rc[destination] = rc.Rollcage(ident, 0, None, destination, n_parcels, config.interfillgrade)
         return
+
+    def blue_reorder(self):
+        if self.timer < config.blue_dict[self.name]:
+            self.unsorted_rc.sort(key=lambda x: x.blue)
+        else:
+            self.failed_rc += [rollcage for rollcage in self.unsorted_rc if rollcage.blue == False]
+            self.unsorted_rc = list(filter(lambda x: x.blue == True, self.unsorted_rc))
+        return
+
 
 
 class Crossdock(PostnlLocation):

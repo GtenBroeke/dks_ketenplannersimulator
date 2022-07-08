@@ -49,3 +49,14 @@ def tick_to_string(ticks, t_start):
     """
     t = t_start + dt.timedelta(minutes=ticks)
     return str(t.time())
+
+
+def check_blue(aar, destination):
+    if destination == 'ALR' and 'ND' in aar:
+        return True
+    elif destination == 'TB' and 'ZD' in aar:
+        return True
+    elif destination == 'WB' and 'BEL' in aar:
+        return True
+    else:
+        return False

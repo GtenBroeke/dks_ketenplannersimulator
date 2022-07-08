@@ -8,13 +8,14 @@ import modelfunctions as mf
 
 class Truck:
     def __init__(self, identifier=None, timer=None, n_rc=None, destination=None, origin=None,
-                 fillgrade=None):
+                 fillgrade=None, blue=None):
         self.identifier = identifier
         self.timer = timer
         self.n_rc = n_rc
         self.destination = destination
         self.origin = origin
         self.fillgrade = fillgrade
+        self.blue = blue
 
     def __str__(self):
         """
@@ -60,7 +61,7 @@ class Truck:
             prob_high = sorting_time - min_time
             rc_timer = random.choices([min_time, max_time], weights=[1-prob_high, prob_high])[0]
             depot.unsorted_rc.append(rc.Rollcage(identifier, rc_timer, self.origin, self.destination,
-                                                 self.fillgrade * rcequiv, self.fillgrade * rcequiv))
+                                                 self.fillgrade * rcequiv, self.fillgrade * rcequiv, self.blue))
             depot.total_rc_in += 1
             depot.parcels_dropped_cum += self.fillgrade * rcequiv
             nrc -= rcequiv
@@ -84,7 +85,8 @@ def initialise_trucks(orders, depot_dict):
         origin = row[config.col_ord_cust_id]
         fillgrade = row[config.col_ord_mg] / row[config.col_ord_rc]
         rcp = row[config.col_ord_rc]
-        truck_dict[identifier] = Truck(identifier, timer, rcp, destination, origin, fillgrade)
+        blue = mf.check_blue(row[config.col_ord_aar], row[config.col_ord_dest])
+        truck_dict[identifier] = Truck(identifier, timer, rcp, destination, origin, fillgrade, blue)
     return truck_dict
 
 
