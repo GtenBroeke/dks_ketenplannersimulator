@@ -52,10 +52,14 @@ col_name_2 = 'Depotnaam2'
 col_name_3 = 'Depotnaam3'
 
 # Below we create a dictionary of the 'afzetgebieden' Note: this piece of code should still be improved
-orders = pd.read_csv('input/OrdersPrepped_23052022.csv')
+orders = pd.read_csv(HINTERLANDFILE)
 orders.fillna(0, inplace=True)
+depot_names = pd.read_csv(DEPOTNAMESFILE, sep=';')
+for ind, row in depot_names.iterrows():
+    orders.rename(columns={row.Depotnaam2: row.Depotnaam1}, inplace=True)
+
 afzet = dict()
 for ind, row in orders.iterrows():
     cust = row[col_ord_cust_id]
     if cust not in afzet.keys():
-        afzet[cust] = row['ALM':'ASN'].to_dict()
+        afzet[cust] = row['ALR':'ASN'].to_dict()

@@ -61,7 +61,7 @@ def check_blue(aar, destination):
     else:
         return False
 
-def read_afzet(DepotDict):
+def read_afzet():
     """
     Function to read data on 'afzetgebieden' this data will be used to determine the proportions of parcel for each
     client going in each of the possible directions
@@ -71,7 +71,6 @@ def read_afzet(DepotDict):
     df = pd.read_csv(config.HINTERLANDFILE)
     df.fillna(0, inplace=True)
     depot_names = pd.read_csv(config.DEPOTNAMESFILE, sep=';')
-   # df.columns = df.columns.replace(list(depot_names[config.col_name_3]), list(depot_names[config.col_name_1]))
 
     for ind, row in depot_names.iterrows():
         df.rename(columns={row.Depotnaam2: row.Depotnaam1}, inplace=True)
@@ -81,5 +80,6 @@ def read_afzet(DepotDict):
         cust = row[config.col_ord_cust_id]
         if cust not in hinterland.keys():
             hinterland[cust] = row['ALR':'ASN'].to_dict()
+
     return hinterland
 

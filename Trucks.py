@@ -6,6 +6,7 @@ import numpy as np
 import modelfunctions as mf
 import production_state as ps
 
+
 class Truck:
     def __init__(self, identifier=None, timer=None, n_rc=None, destination=None, origin=None,
                  fillgrade=None, blue=None):
@@ -55,7 +56,7 @@ class Truck:
         while nrc > 0:
             rcequiv = min(1, nrc)
             identifier = uuid4()
-            sorting_time = self.fillgrade * rcequiv / ps.get_productions_states(depot.sorting_limits)[depot.state]['production'] / depot.state
+            sorting_time = self.fillgrade * rcequiv / (ps.get_productions_states(depot.sorting_limits)[depot.state]['production'] / depot.state / 60)
             min_time = int(np.floor(sorting_time))
             max_time = int(np.ceil(sorting_time))
             prob_high = sorting_time - min_time

@@ -20,7 +20,6 @@ orders = mf.read_and_clean_orders()                      # Read orderset
 DepotDict = dep.initialise_depots()                      # Read depot info and initialise depots
 TruckDict = truck.initialise_trucks(orders, DepotDict)   # Initialise trucks for collection, based on orderset
 CrossdockDict = dep.initialise_crossdocks()              # Initialise cross-docks
-hinterland = mf.read_afzet(DepotDict)                    # Read 'hinterland' per customer
 
 for i in range(config.n_steps):
     truck.update_trucks(TruckDict)
