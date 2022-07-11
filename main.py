@@ -3,6 +3,7 @@ import Trucks as truck
 import visualize
 import config
 import modelfunctions as mf
+import run
 
 # Running this file corresponds to performing a single model run. A run begins at 06:00am and runs in discrete
 # time-steps of 1 minute (ticks) until 06:00am the next day. Each tick, trucks and depots are updated.
@@ -22,3 +23,11 @@ TruckDict = truck.initialise_trucks(orders, DepotDict)   # Initialise trucks for
 for i in range(config.n_steps):
     truck.update_trucks(TruckDict)
     dep.update_depots(DepotDict)
+
+
+n_runs = 30
+arr_diff = list(range(n_runs))
+n_unsorted = list()
+for i in range(n_runs):
+    print(i)
+    n_unsorted.append(run.perform_run(arr_diff[i]))
