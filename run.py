@@ -4,9 +4,9 @@ import config
 import modelfunctions as mf
 
 
-def perform_run(unc_arr):
+def perform_run(unc_arr, sorting_limits):
     orders = mf.read_and_clean_orders()  # Read orderset
-    DepotDict = dep.initialise_depots()  # Read depot info and initialise depots
+    DepotDict = dep.initialise_depots(sorting_limits)  # Read depot info and initialise depots
     TruckDict = truck.initialise_trucks(orders, DepotDict, unc_arr)  # Initialise trucks for collection, based on orderset
 
     for i in range(config.n_steps):

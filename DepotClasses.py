@@ -4,6 +4,7 @@ from uuid import uuid4
 import datetime as dt
 import config
 import modelfunctions as mf
+import production_state as ps
 
 
 class PostnlLocation:
@@ -15,7 +16,7 @@ class PostnlLocation:
 
 class Depot(PostnlLocation):
     def __init__(self, name=None, latitude=None, longitude=None, state=None, docks=None, floor_in=None, floor_plus=None,
-                 floor_out=None, sorting_start=None, sorting_end=None):
+                 floor_out=None, sorting_start=None, sorting_end=None, sorting_limits=None):
         super().__init__(name, latitude, longitude)
         self.state = state
         self.docks = docks
@@ -24,6 +25,7 @@ class Depot(PostnlLocation):
         self.floor_out = floor_out
         self.sorting_start = sorting_start
         self.sorting_end = sorting_end
+        self.sorting_limits = sorting_limits
 
         # Below attributes are used in running the model
         self.timer = 0                     # Timer, used to keep track of sorting times
@@ -209,7 +211,7 @@ def update_depots(depot_dict):
         depot.update()
 
 
-def initialise_depots():
+def initialise_depots(sorting_limits=0.09):
     """
     Read depot info and initialise depots. Basic info like name, latitude, longitude, etc. is read from a csv file
     which contains all depot info that will not change frequently. For each depot, we read the start and end times of
@@ -248,7 +250,7 @@ def initialise_depots():
         depdict[row[config.col_dep_name]] = Depot(row[config.col_dep_name], row[config.col_dep_lat],
                                                   row[config.col_dep_lon], state, row[config.col_dep_docks],
                                                   row[config.col_dep_floorcap], row[config.col_dep_pluscap],
-                                                  row[config.col_dep_outmax], start, end)
+                                                  row[config.col_dep_outmax], start, end, sorting_limits)
     return depdict
 
 
@@ -260,8 +262,7 @@ def initialise_crossdocks():
     """
     crossdocks = pd.read_excel(config.DEPOTFILE, sheet_name='DepotData')
     crossdocks = crossdocks[crossdocks[config.col_dep_type].str.contains('PLUS')
-                            or crossdocks[config.col_dep_type].str.contains('CROSS')]
-    crossdocks = crossdocks.set_index(config.col_dep_name).T.to_dict('list')
+                            | crossdocks[config.col_dep_type].str.contains('CROSS')]
     crossdockdict = dict()
     for ind, row in crossdocks.iterrows():
         crossdockdict[row[config.col_dep_name]] = Crossdock(row[config.col_dep_name], row[config.col_dep_lat],

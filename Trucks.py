@@ -4,7 +4,7 @@ import Rollcage as rc
 import config
 import numpy as np
 import modelfunctions as mf
-
+import production_state as ps
 
 class Truck:
     def __init__(self, identifier=None, timer=None, n_rc=None, destination=None, origin=None,
@@ -55,7 +55,7 @@ class Truck:
         while nrc > 0:
             rcequiv = min(1, nrc)
             identifier = uuid4()
-            sorting_time = self.fillgrade * rcequiv / config.n_sorted_per_state
+            sorting_time = self.fillgrade * rcequiv / ps.get_productions_states(depot.sorting_limits)[depot.state]['production'] / depot.state
             min_time = int(np.floor(sorting_time))
             max_time = int(np.ceil(sorting_time))
             prob_high = sorting_time - min_time

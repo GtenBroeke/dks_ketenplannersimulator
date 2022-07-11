@@ -19,15 +19,10 @@ import run
 orders = mf.read_and_clean_orders()                      # Read orderset
 DepotDict = dep.initialise_depots()                      # Read depot info and initialise depots
 TruckDict = truck.initialise_trucks(orders, DepotDict)   # Initialise trucks for collection, based on orderset
+CrossdockDict = dep.initialise_crossdocks()              # Initialise cross-docks
+hinterland = mf.read_afzet(DepotDict)                    # Read 'hinterland' per customer
 
 for i in range(config.n_steps):
     truck.update_trucks(TruckDict)
     dep.update_depots(DepotDict)
 
-
-n_runs = 30
-arr_diff = list(range(n_runs))
-n_unsorted = list()
-for i in range(n_runs):
-    print(i)
-    n_unsorted.append(run.perform_run(arr_diff[i]))
