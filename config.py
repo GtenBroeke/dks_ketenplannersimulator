@@ -12,13 +12,15 @@ sorting_time = 5                                          # Time parcels on aver
 date = dt.date(2022, 5, 23)                               # Date of simulation run
 StartTime = dt.datetime.combine(date, dt.time(6, 0, 0))   # Start time of simulation
 n_steps = 60*24                                           # Total number of time-steps in one run (equivalent to 24 hours)
+unloading_time = 8
 
+arrival_spread = 0
 PERCENTAGE_REJECT = 0.045
 PERCENTAGE_OVERLOOP = 0.01
 PERCENTAGE_VALIDATIE = 0.03
 PERCENTAGE_TOTAAL = PERCENTAGE_VALIDATIE + PERCENTAGE_REJECT + PERCENTAGE_OVERLOOP
 
-n_sorted_per_state = 13.116   # Sorting speed per state, in parcels per minute
+#n_sorted_per_state = 13.116   # Sorting speed per state, in parcels per minute
 
 interfillgrade = 30    # Number of parcels per RC in inter transport (to be replaced by fillgrade based on data)
 blue = True

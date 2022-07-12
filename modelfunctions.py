@@ -61,6 +61,7 @@ def check_blue(aar, destination):
     else:
         return False
 
+
 def read_afzet():
     """
     Function to read data on 'afzetgebieden' this data will be used to determine the proportions of parcel for each

@@ -69,7 +69,7 @@ class Truck:
         return
 
 
-def initialise_trucks(orders, depot_dict, arrival_window=0):
+def initialise_trucks(orders, depot_dict, delay=config.unloading_time, arrival_window=0):
     """
     Function to initialize trucks for rollcages for collection. Each truck is given a timer. At the end of this
     timer, the truck drops its RC at a depot. The truck is then removed from the simulation.
@@ -83,6 +83,7 @@ def initialise_trucks(orders, depot_dict, arrival_window=0):
     for ind, row in orders.iterrows():
         identifier = row[config.col_ord_cust_id]
         timer = mf.datetime_to_ticks(row.LoadingTime, config.StartTime)
+        timer += delay
         timer += random.randint(-arrival_window, arrival_window)
         destination = depot_dict[row[config.col_ord_dest]]
         origin = row[config.col_ord_cust_id]

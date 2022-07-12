@@ -1,7 +1,9 @@
+import config
+import run
+import pandas as pd
+import modelfunctions as mf
 import DepotClasses as dep
 import Trucks as truck
-import config
-import modelfunctions as mf
 
 
 def perform_run(unc_arr, sorting_limits):
@@ -14,13 +16,17 @@ def perform_run(unc_arr, sorting_limits):
         dep.update_depots(DepotDict)
 
     n_uns = sum(len(depot.unsorted_rc) + len(depot.rc_on_sorter) for depot in DepotDict.values())
-    outcome_dict = {}
-    for depot in DepotDict.values():
-        if depot.name in outcome_dict.keys():
-            outcome_dict[depot.name].append(DepotDict)
-        else:
-            outcome_dict[depot.name] = [len(depot.unsorted_rc) + len(depot.rc_on_sorter)]
-    outcome_dict = {'ALR': len(DepotDict['ALR'].failed_rc),
-                    'TB': len(DepotDict['TB'].failed_rc),
-                    'WB': len(DepotDict['WB'].failed_rc)}
-    return outcome_dict
+
+    return n_uns
+
+n_runs = 100
+n_unsorted = list()
+
+for i in range(n_runs):
+    print(i)
+    n_unsorted.append(run.perform_run(config.arrival_spread, config.PERCENTAGE_TOTAAL))
+
+df_out = pd.DataFrame()
+for run in n_unsorted:
+    row = pd.DataFrame(run, index=[0])
+    df_out = pd.concat([df_out, row])
