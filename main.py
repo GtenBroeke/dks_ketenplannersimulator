@@ -16,10 +16,10 @@ import run
 # TO DO
 # Definieer kolommen voor het inlezen van data
 
-orders = mf.read_and_clean_orders()                      # Read orderset
-DepotDict = dep.initialise_depots()                      # Read depot info and initialise depots
-TruckDict = truck.initialise_trucks(orders, DepotDict)   # Initialise trucks for collection, based on orderset
-CrossdockDict = dep.initialise_crossdocks()              # Initialise cross-docks
+orders = mf.read_and_clean_orders()                               # Read orderset
+DepotDict = dep.initialise_depots(config.PERCENTAGE_TOTAAL)       # Read depot info and initialise depots
+TruckDict = truck.initialise_trucks(orders, DepotDict)            # Initialise trucks for collection, based on orderset
+CrossdockDict = dep.initialise_crossdocks()                       # Initialise cross-docks
 
 for i in range(config.n_steps):
     truck.update_trucks(TruckDict)

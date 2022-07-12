@@ -75,6 +75,7 @@ def initialise_trucks(orders, depot_dict, arrival_window=0):
     timer, the truck drops its RC at a depot. The truck is then removed from the simulation.
     :param orders: DataFrame with one order per row
     :param depot_dict: Dictionary containing depot objects
+    :param arrival_window: Parameter describing the uncertainty in the arrival times of trucks
     :return: Dictionary with all created truck objects
     """
 
@@ -82,7 +83,7 @@ def initialise_trucks(orders, depot_dict, arrival_window=0):
     for ind, row in orders.iterrows():
         identifier = row[config.col_ord_cust_id]
         timer = mf.datetime_to_ticks(row.LoadingTime, config.StartTime)
-        timer += random.randint(-5, arrival_window)
+        timer += random.randint(-arrival_window, arrival_window)
         destination = depot_dict[row[config.col_ord_dest]]
         origin = row[config.col_ord_cust_id]
         fillgrade = row[config.col_ord_mg] / row[config.col_ord_rc]
