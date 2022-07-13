@@ -1,0 +1,349 @@
+{
+    "ALR_verz": [
+        "x_ZWO",
+        "x_ZBM",
+        "x_XASD"
+    ],
+    "AMF_verz": [
+        "x_NIWG",
+        "x_ZWO",
+        "x_AMF",
+        "x_ZBM",
+        "x_XASD",
+        "x_HT"
+    ],
+    "AP_verz": [
+        "x_NIWG",
+        "x_ZWO",
+        "x_AMF",
+        "x_ZBM",
+        "x_XASD",
+        "x_HT"
+    ],
+    "ASD_verz": [
+        "x_NIWG",
+        "x_ZWO",
+        "x_AMF",
+        "x_ZBM",
+        "x_HT",
+        "x_XASD"
+    ],
+    "BD_verz": [
+        "x_WVN",
+        "x_TL",
+        "x_AMF",
+        "x_XWW",
+        "x_XASD",
+        "x_HT"
+    ],
+    "BFC_verz": [
+        "x_TL",
+        "x_XWW",
+        "x_XASD"
+    ],
+    "BORN_verz": [
+        "x_NIWG",
+        "x_TL",
+        "x_AMF",
+        "x_XWW",
+        "x_XASD",
+        "x_HT"
+    ],
+    "DDT_verz": [
+        "x_WVN",
+        "x_TL",
+        "x_AMF",
+        "x_XWW",
+        "x_XASD",
+        "x_HT"
+    ],
+    "ELT_verz": [
+        "x_NIWG",
+        "x_TL",
+        "x_AMF",
+        "x_ZBM",
+        "x_XASD",
+        "x_HT"
+    ],
+    "GS_verz": [
+        "x_WVN",
+        "x_TL",
+        "x_AMF",
+        "x_XWW",
+        "x_XASD",
+        "x_HT"
+    ],
+    "HBD_verz": [
+        "x_WVN",
+        "x_TL",
+        "x_AMF",
+        "x_XWW",
+        "x_XASD",
+        "x_HT"
+    ],
+    "HGL_verz": [
+        "x_NIWG",
+        "x_ZWO",
+        "x_AMF",
+        "x_ZBM",
+        "x_XASD",
+        "x_HT"
+    ],
+    "HGV_verz": [
+        "x_ZWO",
+        "x_AMF",
+        "x_ZBM",
+        "x_XASD",
+        "x_HT",
+        "x_NIWG"
+    ],
+    "HT_verz": [
+        "x_NIWG",
+        "x_TL",
+        "x_AMF",
+        "x_XWW",
+        "x_XASD",
+        "x_HT"
+    ],
+    "HW_verz": [
+        "x_WVN",
+        "x_ZWO",
+        "x_AMF",
+        "x_ZBM",
+        "x_XASD",
+        "x_HT"
+    ],
+    "KHM_verz": [
+        "x_NIWG",
+        "x_ZWO",
+        "x_AMF",
+        "x_ZBM",
+        "x_XASD",
+        "x_HT"
+    ],
+    "LW_verz": [
+        "x_NIWG",
+        "x_ZWO",
+        "x_AMF",
+        "x_ZBM",
+        "x_XASD",
+        "x_HT"
+    ],
+    "NIWG_verz": [
+        "x_NIWG",
+        "x_TL",
+        "x_AMF",
+        "x_ZBM",
+        "x_XASD",
+        "x_HT"
+    ],
+    "OPM_verz": [
+        "x_WVN",
+        "x_ZWO",
+        "x_AMF",
+        "x_ZBM",
+        "x_XASD",
+        "x_HT"
+    ],
+    "RD_verz": [
+        "x_WVN",
+        "x_TL",
+        "x_AMF",
+        "x_XWW",
+        "x_XASD",
+        "x_HT"
+    ],
+    "SKP_verz": [
+        "x_NIWG",
+        "x_TL",
+        "x_AMF",
+        "x_ZBM",
+        "x_XASD",
+        "x_HT"
+    ],
+    "SON_verz": [
+        "x_NIWG",
+        "x_TL",
+        "x_AMF",
+        "x_XWW",
+        "x_XASD",
+        "x_HT"
+    ],
+    "SSH_verz": [
+        "x_WVN",
+        "x_ZWO",
+        "x_AMF",
+        "x_ZBM",
+        "x_XASD",
+        "x_HT"
+    ],
+    "TB_verz": [
+        "x_TL",
+        "x_XWW",
+        "x_XASD"
+    ],
+    "UT_verz": [
+        "x_NIWG",
+        "x_TL",
+        "x_AMF",
+        "x_ZBM",
+        "x_XASD",
+        "x_HT"
+    ],
+    "VL_verz": [
+        "x_NIWG",
+        "x_TL",
+        "x_AMF",
+        "x_XWW",
+        "x_XASD",
+        "x_HT"
+    ],
+    "WB_verz": [
+        "x_TL",
+        "x_XASD",
+        "x_XWW"
+    ],
+    "WVN_verz": [
+        "x_WVN",
+        "x_TL",
+        "x_AMF",
+        "x_ZBM",
+        "x_XASD",
+        "x_HT"
+    ],
+    "WZN_verz": [
+        "x_WVN",
+        "x_ZWO",
+        "x_AMF",
+        "x_ZBM",
+        "x_XASD",
+        "x_HT"
+    ],
+    "ZL_verz": [
+        "x_NIWG",
+        "x_ZWO",
+        "x_AMF",
+        "x_ZBM",
+        "x_XASD",
+        "x_HT"
+    ],
+    "x_AMF": [
+        "AP_distr",
+        "ASN_distr",
+        "HGL_distr",
+        "KHM_distr",
+        "LW_distr",
+        "ZL_distr",
+        "HGV_distr",
+        "AMF_distr"
+    ],
+    "x_HT": [
+        "BD_distr",
+        "BORN_distr",
+        "GS_distr",
+        "HT_distr",
+        "SON_distr",
+        "VL_distr"
+    ],
+    "x_NIWG": [
+        "AL_distr",
+        "DDT_distr",
+        "HBD_distr",
+        "NIWG_distr",
+        "RD_distr",
+        "UT_distr",
+        "WVN_distr"
+    ],
+    "x_TL": [
+        "ALR_distr",
+        "AMF_distr",
+        "AP_distr",
+        "DDT_distr",
+        "ELT_distr",
+        "HBD_distr",
+        "HGL_distr",
+        "KHM_distr",
+        "LW_distr",
+        "NIWG_distr",
+        "RD_distr",
+        "TB_distr",
+        "UT_distr",
+        "WVN_distr",
+        "ZL_distr",
+        "HGV_distr",
+        "AL_distr",
+        "ASN_distr"
+    ],
+    "x_WVN": [
+        "AL_distr",
+        "DDT_distr",
+        "HBD_distr",
+        "NIWG_distr",
+        "RD_distr",
+        "UT_distr",
+        "WVN_distr"
+    ],
+    "x_XASD": [
+        "ASD_distr",
+        "HW_distr",
+        "OPM_distr",
+        "SSH_distr",
+        "WZN_distr"
+    ],
+    "x_XWW": [
+        "ARD_distr",
+        "BORN_distr",
+        "DTD_distr",
+        "GS_distr",
+        "HT_distr",
+        "MECH_distr",
+        "NAM_distr",
+        "OEV_distr",
+        "SNI_distr",
+        "SON_distr",
+        "STT_distr",
+        "VIL_distr",
+        "VL_distr",
+        "WB_distr",
+        "WML_distr",
+        "BD_distr"
+    ],
+    "x_ZBM": [
+        "ARD_distr",
+        "BD_distr",
+        "BORN_distr",
+        "DTD_distr",
+        "GS_distr",
+        "HT_distr",
+        "MECH_distr",
+        "NAM_distr",
+        "OEV_distr",
+        "SNI_distr",
+        "SON_distr",
+        "STT_distr",
+        "VIL_distr",
+        "VL_distr",
+        "WB_distr",
+        "WML_distr"
+    ],
+    "x_ZWO": [
+        "AL_distr",
+        "AMF_distr",
+        "AP_distr",
+        "ASN_distr",
+        "DDT_distr",
+        "ELT_distr",
+        "HBD_distr",
+        "HGL_distr",
+        "KHM_distr",
+        "LW_distr",
+        "NIWG_distr",
+        "RD_distr",
+        "TB_distr",
+        "UT_distr",
+        "WVN_distr",
+        "ZL_distr",
+        "HGV_distr",
+        "ALR_distr"
+    ]
+}

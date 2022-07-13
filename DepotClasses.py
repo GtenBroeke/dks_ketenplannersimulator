@@ -179,7 +179,8 @@ class Depot(PostnlLocation):
         # currently being filled
         else:
             ident = uuid4()
-            self.afvoer_rc[destination] = rc.Rollcage(ident, 0, None, destination, n_parcels, config.interfillgrade)
+            self.afvoer_rc[destination] = rc.Rollcage(ident, 0, self.name, destination, n_parcels, config.interfillgrade)
+            self.afvoer_rc[destination].assign_crossdock()
         return
 
     def blue_reorder(self):

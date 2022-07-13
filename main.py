@@ -4,6 +4,7 @@ import visualize
 import config
 import modelfunctions as mf
 import run
+import json
 
 # Running this file corresponds to performing a single model run. A run begins at 06:00am and runs in discrete
 # time-steps of 1 minute (ticks) until 06:00am the next day. Each tick, trucks and depots are updated.
@@ -21,7 +22,15 @@ DepotDict = dep.initialise_depots(config.PERCENTAGE_TOTAAL)       # Read depot i
 TruckDict = truck.initialise_trucks(orders, DepotDict)            # Initialise trucks for collection, based on orderset
 CrossdockDict = dep.initialise_crossdocks()                       # Initialise cross-docks
 
+
+with open('input/routes.json') as json_file:
+    routes = json.load(json_file)
+routes
+
+
 for i in range(config.n_steps):
     truck.update_trucks(TruckDict)
     dep.update_depots(DepotDict)
+
+
 

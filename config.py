@@ -1,5 +1,6 @@
 import pandas as pd
 import datetime as dt
+import json
 
 # Filepaths
 ORDERFILE = 'input/kp_solution/ketenmanagement.csv'
@@ -70,3 +71,6 @@ for ind, row in orders.iterrows():
     cust = row[col_ord_cust_id]
     if cust not in afzet.keys():
         afzet[cust] = row['ALR':'ASN'].to_dict()
+
+with open('intermediate/routes.json') as json_file:
+    routes = json.load(json_file)

@@ -1,4 +1,5 @@
 import config
+import random
 
 
 class Rollcage:
@@ -11,6 +12,7 @@ class Rollcage:
         self.fillgrade = fillgrade
         self.blue = blue
         self.sorting_timer = 0
+        self.xdock = None
 
     def add_to_sorter(self):
         """
@@ -37,4 +39,22 @@ class Rollcage:
             for destination in config.afzet['C6801975680'].keys():
                 parcels = self.n_parcels * config.afzet['C6801975680'][destination]
                 self.destination.add_sorted_parcels(parcels, destination)
+        return
+
+    def assign_crossdock(self):
+        if self.origin == self.destination:
+            return
+        if self.origin == 'WB' and self.destination in ['ARD', 'DTD', 'NAM', 'OEV', 'SNI', 'STT', 'VIL', 'WML', 'MECH']:
+            return
+
+        origin = self.origin + '_verz'
+        destination = self.destination + '_distr'
+        xdocks = []
+        for xdock in config.routes[origin].keys():
+            if destination in config.routes[origin][xdock]:
+                xdocks.append(xdock)
+        try:
+            self.xdock = random.choice(xdocks)
+        except:
+            print("No possible route")
         return
