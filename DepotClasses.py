@@ -5,6 +5,8 @@ import datetime as dt
 import config
 import modelfunctions as mf
 import production_state as ps
+import Trucks as tr
+
 
 
 class PostnlLocation:
@@ -73,6 +75,7 @@ class Depot(PostnlLocation):
             self.fill_opvoer_locations()
             self.process_opvoer()
             self.update_sorter()
+            #truck_list = self.call_inter()
         if self.timer == self.sorting_end:
             self.process_restcontainers()
         # Note: Below lines are used only to keep track of results, and are not needed to run the simulation
@@ -191,6 +194,22 @@ class Depot(PostnlLocation):
             self.unsorted_rc = list(filter(lambda x: x.blue == True, self.unsorted_rc))
         return
 
+    #def call_inter(self):
+    #    xdocks = {rollcage.xdock for rollcage in self.sorted_rc}
+    #    truck_list = []
+    #    for xdock in xdocks:
+    #        n_rc = len([rollcage for rollcage in self.sorted_rc if rollcage.xdock == xdock])
+    #        if n_rc >= 48:
+    #            id = uuid4()
+    #            rc_list = [rollcage for rollcage in self.sorted_rc if rollcage.xdock == xdock]
+    #            while len(rc_list) > 48:
+    #                rc_list.pop(-1)
+    #            new_truck = tr.Truck(id, 999999, 48, xdock, self.name, 48)
+    #            new_truck.rc = rc_list
+    #            for rollcage in rc_list:
+    #                self.sorted_rc.remove(rollcage)
+    #            truck_list.append(new_truck)
+    #    return truck_list
 
 
 class Crossdock(PostnlLocation):
@@ -210,6 +229,7 @@ def update_depots(depot_dict):
     """
     for depot in depot_dict.values():
         depot.update()
+
 
 
 def initialise_depots(sorting_limits=0.09):

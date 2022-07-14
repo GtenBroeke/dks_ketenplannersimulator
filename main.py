@@ -1,3 +1,4 @@
+import pandas as pd
 import DepotClasses as dep
 import Trucks as truck
 import visualize
@@ -14,14 +15,14 @@ import json
 # over the possible destinations based on historic proportions collected per customer. Collection fill grades are
 # also included at customer level. These fill grades are taken into account when calculating sorting speeds.
 
-# TO DO
-# Definieer kolommen voor het inlezen van data
 
 orders = mf.read_and_clean_orders()                               # Read orderset
 DepotDict = dep.initialise_depots(config.PERCENTAGE_TOTAAL)       # Read depot info and initialise depots
 TruckDict = truck.initialise_trucks(orders, DepotDict)            # Initialise trucks for collection, based on orderset
 CrossdockDict = dep.initialise_crossdocks()                       # Initialise cross-docks
 
+inter_transports = mf.read_and_clean_inter()
+InterDict = truck.initialise_inter(inter_transports, DepotDict)
 
 with open('input/routes.json') as json_file:
     routes = json.load(json_file)
@@ -31,6 +32,5 @@ routes
 for i in range(config.n_steps):
     truck.update_trucks(TruckDict)
     dep.update_depots(DepotDict)
-
-
+    truck.update_trucks(InterDict)
 

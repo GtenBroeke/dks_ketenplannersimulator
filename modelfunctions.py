@@ -84,3 +84,32 @@ def read_afzet():
 
     return hinterland
 
+
+def read_and_clean_inter():
+    var = pd.read_csv('input/kp_solution/var_2022_05_23.csv')
+    var = var[var['operatorservicecode'].isin([70, 91])]
+    var = var[var['orderstatus'] == 'Delivered']
+    var['pickup_time'] = var['pickup.startdateactual'] + ' ' + var['pickup.starttimeactual']
+    var['pickup_time'] = pd.to_datetime(var['pickup_time'])
+    var['pickup_time'] = var['pickup_time'].apply(lambda x: x.tz_convert('Europe/Berlin'))
+    var['pickup_time'] = var['pickup_time'].apply(lambda x: x.tz_localize(None))
+
+    var['dropoff_time'] = var['dropoff.startdateactual'] + ' ' + var['dropoff.starttimeactual']
+    var['dropoff_time'] = pd.to_datetime(var['dropoff_time'])
+    var['dropoff_time'] = var['dropoff_time'].apply(lambda x: x.tz_convert('Europe/Berlin'))
+    var['dropoff_time'] = var['dropoff_time'].apply(lambda x: x.tz_localize(None))
+
+    var.dropna(subset=['pickup_time'], inplace=True)
+    var = var[var['pickup_time'] >= config.StartTime]
+    var = var[var['pickup_time'] <= (config.StartTime + dt.timedelta(hours=24))]
+
+    depot_names = pd.read_csv(config.DEPOTNAMESFILE, sep=';')
+    var['dropoff.locationname'] = var['dropoff.locationname'].replace(list(depot_names[config.col_name_3]),
+                                                      list(depot_names[config.col_name_1]))
+    var['pickup.locationname'] = var['pickup.locationname'].replace(list(depot_names[config.col_name_3]),
+                                                                    list(depot_names[config.col_name_1]))
+    return var
+
+
+def get_drivetime(origin, destination):
+    return 30

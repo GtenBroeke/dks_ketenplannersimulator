@@ -9,13 +9,14 @@ import production_state as ps
 
 class Truck:
     def __init__(self, identifier=None, timer=None, n_rc=None, destination=None, origin=None,
-                 fillgrade=None, blue=None):
+                 fillgrade=None, status=None, blue=None):
         self.identifier = identifier
         self.timer = timer
         self.n_rc = n_rc
         self.destination = destination
         self.origin = origin
         self.fillgrade = fillgrade
+        self.status = status
         self.blue = blue
 
     def __str__(self):
@@ -35,8 +36,14 @@ class Truck:
         """
         self.timer -= 1
         if self.timer == 0:
-            depot = self.destination
-            self.drop_rc(depot)
+            if self.status == 0:
+                depot = self.destination
+                self.drop_rc(depot)
+            if self.status == 1:
+                depot = self.origin
+                self.pickup_rc(depot)
+                self.timer = mf.get_drivetime(self.origin, self.destination)
+                self.status = 2
         return
 
     def drop_rc(self, depot):
@@ -68,6 +75,17 @@ class Truck:
             nrc -= rcequiv
         return
 
+    def pickup_rc(self, depot):
+        try:
+            n_rc = max(48, len([rollcage for rollcage in depot.sorted_rc if rollcage.xdock == self.destination]))
+            self.rc = [rollcage for rollcage in depot.sorted_rc if rollcage.xdock == self.destination][0:n_rc]
+            for rollcage in self.rc:
+                depot.sorted_rc.remove(rollcage)
+        except:
+            n_rc = 0
+            self.rc = []
+
+
 
 def initialise_trucks(orders, depot_dict, delay=config.unloading_time, arrival_window=0):
     """
@@ -90,7 +108,7 @@ def initialise_trucks(orders, depot_dict, delay=config.unloading_time, arrival_w
         fillgrade = row[config.col_ord_mg] / row[config.col_ord_rc]
         rcp = row[config.col_ord_rc]
         blue = mf.check_blue(row[config.col_ord_aar], row[config.col_ord_dest])
-        truck_dict[identifier] = Truck(identifier, timer, rcp, destination, origin, fillgrade, blue)
+        truck_dict[identifier] = Truck(identifier, timer, rcp, destination, origin, fillgrade, 0, blue)
     return truck_dict
 
 
@@ -107,3 +125,25 @@ def update_trucks(truck_dict):
         truck.update()
         if truck.timer == 0:
             del truck_dict[key]
+
+
+def initialise_inter(interorders, depot_dict, crossdock_dict):
+    inter_dict = dict()
+    for ind, row in interorders.iterrows():
+        identifier = row['ordernumber']
+        destination = row['dropoff.locationname']
+        origin = row['pickup.locationname']
+
+        if origin in depot_dict.keys():
+            origin = depot_dict[origin]
+        if destination in depot_dict.keys():
+            destination = depot_dict[destination]
+        if origin in crossdock_dict.keys():
+            origin = crossdock_dict[origin]
+        if destination in crossdock_dict.keys():
+            destination = crossdock_dict[destination]
+
+        timer = mf.datetime_to_ticks(row['pickup_time'], row['dropoff_time'])
+        fillgrade = 30
+        inter_dict[identifier] = Truck(identifier, timer, 0, destination, origin, fillgrade, 1, 0)
+    return inter_dict
