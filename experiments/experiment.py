@@ -3,7 +3,7 @@ import run
 import pandas as pd
 
 n_replicates = 10
-n_runs = 20
+n_runs = 15
 arr_diff = list(range(n_runs))
 n_unsorted = list()
 
