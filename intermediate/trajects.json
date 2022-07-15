@@ -1,12 +1,12 @@
 {
     "ALR_verz": [
-        "x_ZWO",
+        "x_ZWD",
         "x_ZBM",
         "x_XASD"
     ],
     "AMF_verz": [
         "x_NIWG",
-        "x_ZWO",
+        "x_ZWD",
         "x_AMF",
         "x_ZBM",
         "x_XASD",
@@ -14,7 +14,7 @@
     ],
     "AP_verz": [
         "x_NIWG",
-        "x_ZWO",
+        "x_ZWD",
         "x_AMF",
         "x_ZBM",
         "x_XASD",
@@ -22,7 +22,7 @@
     ],
     "ASD_verz": [
         "x_NIWG",
-        "x_ZWO",
+        "x_ZWD",
         "x_AMF",
         "x_ZBM",
         "x_HT",
@@ -83,14 +83,14 @@
     ],
     "HGL_verz": [
         "x_NIWG",
-        "x_ZWO",
+        "x_ZWD",
         "x_AMF",
         "x_ZBM",
         "x_XASD",
         "x_HT"
     ],
     "HGV_verz": [
-        "x_ZWO",
+        "x_ZWD",
         "x_AMF",
         "x_ZBM",
         "x_XASD",
@@ -107,7 +107,7 @@
     ],
     "HW_verz": [
         "x_WVN",
-        "x_ZWO",
+        "x_ZWD",
         "x_AMF",
         "x_ZBM",
         "x_XASD",
@@ -115,7 +115,7 @@
     ],
     "KHM_verz": [
         "x_NIWG",
-        "x_ZWO",
+        "x_ZWD",
         "x_AMF",
         "x_ZBM",
         "x_XASD",
@@ -123,7 +123,7 @@
     ],
     "LW_verz": [
         "x_NIWG",
-        "x_ZWO",
+        "x_ZWD",
         "x_AMF",
         "x_ZBM",
         "x_XASD",
@@ -139,7 +139,7 @@
     ],
     "OPM_verz": [
         "x_WVN",
-        "x_ZWO",
+        "x_ZWD",
         "x_AMF",
         "x_ZBM",
         "x_XASD",
@@ -171,7 +171,7 @@
     ],
     "SSH_verz": [
         "x_WVN",
-        "x_ZWO",
+        "x_ZWD",
         "x_AMF",
         "x_ZBM",
         "x_XASD",
@@ -213,7 +213,7 @@
     ],
     "WZN_verz": [
         "x_WVN",
-        "x_ZWO",
+        "x_ZWD",
         "x_AMF",
         "x_ZBM",
         "x_XASD",
@@ -221,7 +221,7 @@
     ],
     "ZL_verz": [
         "x_NIWG",
-        "x_ZWO",
+        "x_ZWD",
         "x_AMF",
         "x_ZBM",
         "x_XASD",
@@ -326,7 +326,7 @@
         "WB_distr",
         "WML_distr"
     ],
-    "x_ZWO": [
+    "x_ZWD": [
         "AL_distr",
         "AMF_distr",
         "AP_distr",

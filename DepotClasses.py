@@ -8,7 +8,6 @@ import production_state as ps
 import Trucks as tr
 
 
-
 class PostnlLocation:
     def __init__(self, name=None, latitude=None, longitude=None):
         self.name = name
@@ -51,6 +50,8 @@ class Depot(PostnlLocation):
         self.total_rc_in = 0               # Total number of RC dropped at depot
         self.failed_rc = []
         self.rc_processed = []
+        self.rc_crossdock = []
+        self.rc_delivery = []
 
     def __str__(self):
         """
@@ -224,6 +225,8 @@ class Crossdock(PostnlLocation):
         self.docks = docks
         self.docks = docks
         self.buffer = buffer
+
+        self.rc = []
 
 
     def __str__(self):

@@ -1,5 +1,7 @@
 import random
 from uuid import uuid4
+
+import DepotClasses as dep
 import Rollcage as rc
 import config
 import numpy as np
@@ -18,6 +20,8 @@ class Truck:
         self.fillgrade = fillgrade
         self.status = status
         self.blue = blue
+
+        self.rc = []
 
     def __str__(self):
         """
@@ -44,6 +48,9 @@ class Truck:
                 self.pickup_rc(depot)
                 self.timer = mf.get_drivetime(self.origin, self.destination)
                 self.status = 2
+            if self.status == 2:
+                dropoff_location = self.destination
+                self.unload_rc(dropoff_location)
         return
 
     def drop_rc(self, depot):
@@ -75,13 +82,40 @@ class Truck:
             nrc -= rcequiv
         return
 
+
+    def unload_rc(self, location):
+        for rollcage in self.rc:
+            if location.name == rollcage.xdock:
+                if type(location) == dep.Crossdock:
+                    location.rc.append(rollcage)
+                else:
+                    location.rc_crossdock.append(rollcage)
+            elif location.name == rollcage.destination:
+                location.rc_delivery.append(rollcage)
+        self.rc = []
+
+
     def pickup_rc(self, depot):
         try:
-            n_rc = min(48, len([rollcage for rollcage in depot.sorted_rc if rollcage.xdock == self.destination.name]))
-            self.rc = [rollcage for rollcage in depot.sorted_rc if rollcage.xdock == self.destination.name][0:n_rc]
-            self.n_rc = n_rc
-            for rollcage in self.rc:
-                depot.sorted_rc.remove(rollcage)
+            if type(depot) == dep.Depot:
+                n_rc = min(48, len([rollcage for rollcage in depot.sorted_rc if rollcage.xdock == self.destination.name]))
+                self.rc = [rollcage for rollcage in depot.sorted_rc if rollcage.xdock == self.destination.name][0:n_rc]
+                self.n_rc = n_rc
+                for rollcage in self.rc:
+                    depot.sorted_rc.remove(rollcage)
+                if n_rc < 48:
+                    n_rc_cd = min(48-n_rc, len([rollcage for rollcage in depot.rc_crossdock if rollcage.destination == self.destination.name]))
+                    self.rc.extend([rollcage for rollcage in depot.rc_crossdock if rollcage.destination == self.destination.name][0:n_rc_cd])
+                    self.n_rc += n_rc_cd
+                    for rollcage in self.rc[:-n_rc_cd]:
+                        depot.rc_crossdock.remove(rollcage)
+            elif type(depot) == dep.Crossdock:
+                n_rc = min(48, len([rollcage for rollcage in depot.rc if rollcage.destination == self.destination.name]))
+                self.rc = [rollcage for rollcage in depot.rc if rollcage.destination == self.destination.name][0:n_rc]
+                self.n_rc = n_rc
+                for rollcage in self.rc:
+                    depot.rc_crossdock.remove(rollcage)
+
         except:
             n_rc = 0
             self.rc = []

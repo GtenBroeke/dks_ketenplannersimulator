@@ -37,6 +37,8 @@ with open(inputfile, 'r') as infile:
         origin = items[j_origin].strip() + "_verz"
         shift = items[j_shift].strip()
         crossdock = "x_" + items[j_crossdock].strip()
+        if crossdock == 'x_ZWO':
+            crossdock = 'x_ZWD'
         direction = items[j_direction].strip()
 
         if not origin in routes:
