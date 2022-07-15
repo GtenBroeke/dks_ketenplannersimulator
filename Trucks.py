@@ -144,7 +144,7 @@ def initialise_inter(interorders, depot_dict, crossdock_dict):
         if destination in crossdock_dict.keys():
             destination = crossdock_dict[destination]
 
-        timer = mf.datetime_to_ticks(row['pickup_time'], row['dropoff_time'])
+        timer = mf.datetime_to_ticks(row['pickup_time'], config.StartTime)
         fillgrade = 30
         inter_dict[identifier] = Truck(identifier, timer, 0, destination, origin, fillgrade, 1, 0)
     return inter_dict
