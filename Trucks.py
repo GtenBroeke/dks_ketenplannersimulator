@@ -24,7 +24,7 @@ class Truck:
         String to alter the information displayed about trucks in the simulation. Mostly used for debugging purposes.
         :return: String for display
         """
-        return f"Truck from {self.origin} to {self.destination} with {self.n_rc} RC"
+        return f"Truck from {self.origin.name} to {self.destination.name} with {self.n_rc} RC"
 
     def update(self):
         """
@@ -77,8 +77,9 @@ class Truck:
 
     def pickup_rc(self, depot):
         try:
-            n_rc = max(48, len([rollcage for rollcage in depot.sorted_rc if rollcage.xdock == self.destination]))
-            self.rc = [rollcage for rollcage in depot.sorted_rc if rollcage.xdock == self.destination][0:n_rc]
+            n_rc = min(48, len([rollcage for rollcage in depot.sorted_rc if rollcage.xdock == self.destination.name]))
+            self.rc = [rollcage for rollcage in depot.sorted_rc if rollcage.xdock == self.destination.name][0:n_rc]
+            self.n_rc = n_rc
             for rollcage in self.rc:
                 depot.sorted_rc.remove(rollcage)
         except:
@@ -123,7 +124,7 @@ def update_trucks(truck_dict):
     for key in keys:
         truck = truck_dict[key]
         truck.update()
-        if truck.timer == 0:
+        if truck.timer == 0 and truck.status == 0:
             del truck_dict[key]
 
 

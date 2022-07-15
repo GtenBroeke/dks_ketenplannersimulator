@@ -117,8 +117,10 @@ class Depot(PostnlLocation):
         process.
         :return: No return
         """
-        for rollcage in self.afvoer_rc:
+        for rollcage in self.afvoer_rc.values():
             self.sorted_rc.append(rollcage)
+            if type(rollcage) == str:
+                print('Wrong datatype for RC!')
         self.afvoer_rc = []
         return
 
@@ -176,6 +178,8 @@ class Depot(PostnlLocation):
                 left = n_parcels - (rollcage.fillgrade - rollcage.n_parcels)
                 rollcage.n_parcels = rollcage.fillgrade
                 self.sorted_rc.append(rollcage)
+                if type(rollcage) == str:
+                    print('Wrong datatype for RC!')
                 ident = uuid4()
                 self.afvoer_rc[destination] = rc.Rollcage(ident, 0, None, destination, left, config.interfillgrade)
         # If no outgoing RC was yet generated, a new one is made and added to a dictionary containing the RC that are
@@ -221,6 +225,14 @@ class Crossdock(PostnlLocation):
         self.buffer = buffer
 
 
+    def __str__(self):
+        """
+        Function used to display the crossdock characteristics. Mostly for debugging purposes
+        :return: String with name of crossdock
+        """
+        return f"Crossdock {self.name}"
+
+
 def update_depots(depot_dict):
     """
     Function that loops over all depots and performs the update for the depot for the tick
@@ -245,7 +257,7 @@ def initialise_depots(sorting_limits=0.09):
 
     sorting_time = pd.read_csv(config.SORTINGTIMESFILE)
 
-    name_conversion = pd.read_csv(config.DEPOTNAMESFILE, sep=';')
+    name_conversion = pd.read_csv(config.DEPOTNAMESFILE)
     sorting_time['DEPOT'] = sorting_time[config.col_sort_dep].replace(list(name_conversion[config.col_name_2]),
                                                                       list(name_conversion[config.col_name_1]))
     sorting_time.set_index(['DEPOT'], inplace=True)

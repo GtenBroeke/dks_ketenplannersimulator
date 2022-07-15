@@ -8,6 +8,7 @@ DEPOTFILE = 'input/PostNL_depots.xlsx'
 SORTINGTIMESFILE = 'input/kp_solution/DepotStateTime.csv'
 DEPOTNAMESFILE = 'input/vertaling_depotnamen.csv'
 HINTERLANDFILE = 'input/OrdersPrepped_23052022.csv'
+CROSSDOCKNAMESFILE = 'input/crossdock_namen.xlsx'
 
 sorting_time = 5                                          # Time parcels on average are on the sorter
 date = dt.date(2022, 5, 23)                               # Date of simulation run
@@ -62,7 +63,7 @@ col_name_3 = 'Depotnaam3'
 # Below we create a dictionary of the 'afzetgebieden' Note: this piece of code should still be improved
 orders = pd.read_csv(HINTERLANDFILE)
 orders.fillna(0, inplace=True)
-depot_names = pd.read_csv(DEPOTNAMESFILE, sep=';')
+depot_names = pd.read_csv(DEPOTNAMESFILE)
 for ind, row in depot_names.iterrows():
     orders.rename(columns={row.Depotnaam2: row.Depotnaam1}, inplace=True)
 

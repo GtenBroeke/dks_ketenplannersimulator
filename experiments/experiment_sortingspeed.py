@@ -45,8 +45,8 @@ for i in n_unsorted_dict.keys():
     n_sd.append(np.std(n_unsorted_dict[i]))
 
 plt.plot(sorting_limit_list, n_mean)
-plt.plot(sorting_limit_list, [x + y for (x,y) in zip(n_mean, n_sd)])
-plt.plot(sorting_limit_list, [x - y for (x,y) in zip(n_mean, n_sd)])
+plt.plot(sorting_limit_list, [x + y for (x, y) in zip(n_mean, n_sd)])
+plt.plot(sorting_limit_list, [x - y for (x, y) in zip(n_mean, n_sd)])
 plt.xlabel('% reject + overloop + validatie')
 plt.ylabel('# Unsorted RC')
 plt.show()

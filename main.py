@@ -22,15 +22,10 @@ TruckDict = truck.initialise_trucks(orders, DepotDict)            # Initialise t
 CrossdockDict = dep.initialise_crossdocks()                       # Initialise cross-docks
 
 inter_transports = mf.read_and_clean_inter()
-InterDict = truck.initialise_inter(inter_transports, DepotDict)
-
-with open('input/routes.json') as json_file:
-    routes = json.load(json_file)
-routes
+InterDict = truck.initialise_inter(inter_transports, DepotDict, CrossdockDict)
 
 
 for i in range(config.n_steps):
     truck.update_trucks(TruckDict)
     dep.update_depots(DepotDict)
     truck.update_trucks(InterDict)
-

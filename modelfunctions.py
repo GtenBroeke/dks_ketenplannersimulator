@@ -12,7 +12,7 @@ def read_and_clean_orders():
     :return: DataFrame containing an order in each row.
     """
     df = pd.read_csv(config.ORDERFILE)
-    depot_names = pd.read_csv(config.DEPOTNAMESFILE, sep=';')
+    depot_names = pd.read_csv(config.DEPOTNAMESFILE)
     df['Name'] = df[config.col_ord_lospartij].replace(list(depot_names[config.col_name_3]),
                                                       list(depot_names[config.col_name_1]))
     df.dropna(subset=[config.col_ord_lostijd], inplace=True)
@@ -71,7 +71,7 @@ def read_afzet():
     """
     df = pd.read_csv(config.HINTERLANDFILE)
     df.fillna(0, inplace=True)
-    depot_names = pd.read_csv(config.DEPOTNAMESFILE, sep=';')
+    depot_names = pd.read_csv(config.DEPOTNAMESFILE)
 
     for ind, row in depot_names.iterrows():
         df.rename(columns={row.Depotnaam2: row.Depotnaam1}, inplace=True)
@@ -103,11 +103,17 @@ def read_and_clean_inter():
     var = var[var['pickup_time'] >= config.StartTime]
     var = var[var['pickup_time'] <= (config.StartTime + dt.timedelta(hours=24))]
 
-    depot_names = pd.read_csv(config.DEPOTNAMESFILE, sep=';')
-    var['dropoff.locationname'] = var['dropoff.locationname'].replace(list(depot_names[config.col_name_3]),
+    depot_names = pd.read_csv(config.DEPOTNAMESFILE)
+    var['dropoff.locationname'] = var['dropoff.locationshortname'].replace(list(depot_names['DepotnaamVAR']),
                                                       list(depot_names[config.col_name_1]))
-    var['pickup.locationname'] = var['pickup.locationname'].replace(list(depot_names[config.col_name_3]),
+    var['pickup.locationname'] = var['pickup.locationshortname'].replace(list(depot_names['DepotnaamVAR']),
                                                                     list(depot_names[config.col_name_1]))
+
+    crossdock_names = pd.read_excel(config.CROSSDOCKNAMESFILE)
+    var['dropoff.locationname'] = var['dropoff.locationname'].replace(list(crossdock_names['AfkVar']),
+                                                                      list(crossdock_names['Afk']))
+    var['pickup.locationname'] = var['pickup.locationname'].replace(list(crossdock_names['AfkVar']),
+                                                                    list(crossdock_names['Afk']))
     return var
 
 

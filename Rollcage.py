@@ -55,6 +55,7 @@ class Rollcage:
                 xdocks.append(xdock)
         try:
             self.xdock = random.choice(xdocks)
+            self.xdock = self.xdock[2:]
         except:
             print("No possible route")
         return
