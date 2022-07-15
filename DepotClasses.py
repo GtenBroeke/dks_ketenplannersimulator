@@ -181,7 +181,8 @@ class Depot(PostnlLocation):
                 if type(rollcage) == str:
                     print('Wrong datatype for RC!')
                 ident = uuid4()
-                self.afvoer_rc[destination] = rc.Rollcage(ident, 0, None, destination, left, config.interfillgrade)
+                self.afvoer_rc[destination] = rc.Rollcage(ident, 0, self.name, destination, left, config.interfillgrade)
+                self.afvoer_rc[destination].assign_crossdock()
         # If no outgoing RC was yet generated, a new one is made and added to a dictionary containing the RC that are
         # currently being filled
         else:
