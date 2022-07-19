@@ -1,8 +1,10 @@
 import pandas as pd
 import datetime as dt
 import json
+import os
 
 # Filepaths
+os.chdir('C:\\Users\\BroekeGuusten\\OneDrive - PostNL\\Documents\\Python Scripts\\kp-simulator')
 ORDERFILE = 'input/kp_solution/ketenmanagement.csv'
 DEPOTFILE = 'input/PostNL_depots.xlsx'
 SORTINGTIMESFILE = 'input/kp_solution/DepotStateTime.csv'
