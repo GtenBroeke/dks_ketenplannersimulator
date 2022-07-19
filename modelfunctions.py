@@ -3,7 +3,7 @@ import config
 import pandas as pd
 
 
-def read_and_clean_orders():
+def read_and_clean_orders(path=config.ORDERFILE):
     """
     Function to read orderset from the ketenplanner. Orders without planned time are filtered out. Depot names are
     converted to be consistent with those used in the rest of the simulation. Loading times are converted to
@@ -11,7 +11,7 @@ def read_and_clean_orders():
     then no longer used in the simulation.
     :return: DataFrame containing an order in each row.
     """
-    df = pd.read_csv(config.ORDERFILE)
+    df = pd.read_csv(path)
     depot_names = pd.read_csv(config.DEPOTNAMESFILE)
     df['Name'] = df[config.col_ord_lospartij].replace(list(depot_names[config.col_name_3]),
                                                       list(depot_names[config.col_name_1]))

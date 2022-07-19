@@ -52,14 +52,15 @@ class Depot(PostnlLocation):
         self.rc_processed = []
         self.rc_crossdock = []
         self.rc_delivery = []
+        self.rc_cum = 0
 
     def __str__(self):
         """
         Function used to display the depot characteristics. Mostly for debugging purposes
         :return:String with name of depot, unsorted and sorted RC
         """
-        return f"Depot {self.name} with {self.total_rc_in} total " \
-               f"RC and {len(self.unsorted_rc) + len(self.rc_on_sorter)} unsorted remaining"
+        return f"Depot {self.name} with {self.total_rc_in} collected, " \
+               f"{len(self.unsorted_rc) + len(self.rc_on_sorter)} unsorted, and {len(self.sorted_rc)} sorted RC"
 
     def update(self):
         """
@@ -178,7 +179,10 @@ class Depot(PostnlLocation):
             else:
                 left = n_parcels - (rollcage.fillgrade - rollcage.n_parcels)
                 rollcage.n_parcels = rollcage.fillgrade
-                self.sorted_rc.append(rollcage)
+                if rollcage.destination == rollcage.origin:
+                    self.rc_delivery.append(rollcage)
+                else:
+                    self.sorted_rc.append(rollcage)
                 if type(rollcage) == str:
                     print('Wrong datatype for RC!')
                 ident = uuid4()
@@ -199,6 +203,15 @@ class Depot(PostnlLocation):
             self.failed_rc += [rollcage for rollcage in self.unsorted_rc if rollcage.blue == False]
             self.unsorted_rc = list(filter(lambda x: x.blue == True, self.unsorted_rc))
         return
+
+    def remove_loaded_rc(self, rc_list):
+        for rc in rc_list:
+            if rc in self.sorted_rc:
+                self.sorted_rc.remove(rc)
+            elif rc in self.rc_crossdock:
+                self.rc_crossdock.remove(rc)
+            else:
+                print("Loaded RC does not exist")
 
     #def call_inter(self):
     #    xdocks = {rollcage.xdock for rollcage in self.sorted_rc}
@@ -226,7 +239,8 @@ class Crossdock(PostnlLocation):
         self.docks = docks
         self.buffer = buffer
 
-        self.rc = []
+        self.rc_crossdock = []
+        self.rc_cum = 0
 
 
     def __str__(self):
@@ -234,8 +248,15 @@ class Crossdock(PostnlLocation):
         Function used to display the crossdock characteristics. Mostly for debugging purposes
         :return: String with name of crossdock
         """
-        return f"Crossdock {self.name}"
+        return f"Crossdock {self.name} with {self.rc_cum} incoming and {len(self.rc)} remaining RC"
 
+
+    def remove_loaded_rc(self, rc_list):
+        for rc in rc_list:
+            if rc in self.rc_crossdock:
+                self.rc_crossdock.remove(rc)
+            else:
+                print("loaded RC does not exist!")
 
 def update_depots(depot_dict):
     """
@@ -306,3 +327,19 @@ def initialise_crossdocks():
                                                             row[config.col_dep_lon], row[config.col_dep_xdocks],
                                                             row[config.col_dep_buffer])
     return crossdockdict
+
+
+#def initialise_belgium():
+#    """
+#    Function to initialize depots in Belgium.
+#    :return: A dictionary with depots
+#    """
+#    depots = pd.read_excel(config.DEPOTFILE, sheet_name='DepotData')
+#    depots = depots[depots[config.col_dep_type] == 'BELGIE']
+#    bel_dict = dict()
+#    for ind, row in depots.iterrows():
+#        bel_dict[row[config.col_dep_name]] = Crossdock(row[config.col_dep_name], row[config.col_dep_lat],
+#                                                            row[config.col_dep_lon], row[config.col_dep_xdocks],
+#                                                            row[config.col_dep_buffer])
+#    return bel_dict
+

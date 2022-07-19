@@ -84,42 +84,44 @@ class Truck:
 
 
     def unload_rc(self, location):
+        rc_delivered = []
+        if type(location) == str:
+            self.rc = []
+            self.n_rc = 0
+            return
         for rollcage in self.rc:
             if location.name == rollcage.xdock:
-                if type(location) == dep.Crossdock:
-                    location.rc.append(rollcage)
-                else:
-                    location.rc_crossdock.append(rollcage)
-            elif location.name == rollcage.destination:
+                location.rc_crossdock.append(rollcage)
+                location.rc_cum += 1
+                rc_delivered.append(rollcage)
+            else:
                 location.rc_delivery.append(rollcage)
-        self.rc = []
+                rc_delivered.append(rollcage)
+        #for rollcage in rc_delivered:
+        #    self.rc.remove(rollcage)
+        #self.n_rc = len(self.rc)
 
 
     def pickup_rc(self, depot):
-        try:
-            if type(depot) == dep.Depot:
-                n_rc = min(48, len([rollcage for rollcage in depot.sorted_rc if rollcage.xdock == self.destination.name]))
-                self.rc = [rollcage for rollcage in depot.sorted_rc if rollcage.xdock == self.destination.name][0:n_rc]
-                self.n_rc = n_rc
-                for rollcage in self.rc:
-                    depot.sorted_rc.remove(rollcage)
-                if n_rc < 48:
-                    n_rc_cd = min(48-n_rc, len([rollcage for rollcage in depot.rc_crossdock if rollcage.destination == self.destination.name]))
-                    self.rc.extend([rollcage for rollcage in depot.rc_crossdock if rollcage.destination == self.destination.name][0:n_rc_cd])
-                    self.n_rc += n_rc_cd
-                    for rollcage in self.rc[:-n_rc_cd]:
-                        depot.rc_crossdock.remove(rollcage)
-            elif type(depot) == dep.Crossdock:
-                n_rc = min(48, len([rollcage for rollcage in depot.rc if rollcage.destination == self.destination.name]))
-                self.rc = [rollcage for rollcage in depot.rc if rollcage.destination == self.destination.name][0:n_rc]
-                self.n_rc = n_rc
-                for rollcage in self.rc:
-                    depot.rc_crossdock.remove(rollcage)
-
-        except:
-            n_rc = 0
-            self.rc = []
-
+        if type(self.destination) in [dep.Depot, dep.Crossdock]:
+            name = self.destination.name
+        else:
+            name = self.destination
+        if type(depot) == dep.Depot:
+            n_rc = min(48, len([rollcage for rollcage in depot.sorted_rc if rollcage.xdock == name]))
+            self.rc = [rollcage for rollcage in depot.sorted_rc if rollcage.xdock == name][0:n_rc]
+            self.n_rc = n_rc
+            depot.remove_loaded_rc(self.rc)
+            if n_rc < 48:
+                n_rc_cd = min(48-n_rc, len([rollcage for rollcage in depot.rc_crossdock if rollcage.destination == name]))
+                self.rc.extend([rollcage for rollcage in depot.rc_crossdock if rollcage.destination == name][0:n_rc_cd])
+                self.n_rc += n_rc_cd
+                depot.remove_loaded_rc(self.rc[:-n_rc_cd])
+        elif type(depot) == dep.Crossdock:
+            n_rc = min(48, len([rollcage for rollcage in depot.rc_crossdock if rollcage.destination == name]))
+            self.rc = [rollcage for rollcage in depot.rc_crossdock if rollcage.destination == name][0:n_rc]
+            self.n_rc = n_rc
+            depot.remove_loaded_rc(self.rc)
 
 
 def initialise_trucks(orders, depot_dict, delay=config.unloading_time, arrival_window=0):
@@ -160,6 +162,8 @@ def update_trucks(truck_dict):
         truck.update()
         if truck.timer == 0 and truck.status == 0:
             del truck_dict[key]
+        if truck.timer == 0 and truck.status ==2:
+            del truck_dict[key]
 
 
 def initialise_inter(interorders, depot_dict, crossdock_dict):
@@ -168,6 +172,9 @@ def initialise_inter(interorders, depot_dict, crossdock_dict):
         identifier = row['ordernumber']
         destination = row['dropoff.locationname']
         origin = row['pickup.locationname']
+
+        if destination == 'AMF':
+            print("Pause debugger")
 
         if origin in depot_dict.keys():
             origin = depot_dict[origin]

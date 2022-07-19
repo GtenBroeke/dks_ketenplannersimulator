@@ -14,6 +14,9 @@ class Rollcage:
         self.sorting_timer = 0
         self.xdock = None
 
+    def __str__(self):
+        return f"Rollcage from {self.origin} via {self.xdock} to {self.destination} "
+
     def add_to_sorter(self):
         """
         This function sets the time required for a packages parcels to be sorted, once they have been put on the sorter
